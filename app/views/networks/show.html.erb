@@ -1,0 +1,38 @@
+<a href="/users">All Users</a>
+<a href="/mains">Logout</a>
+<h2>Hi <%= @user.name %></h2>
+
+<h3>Here is your profile description:</h3>
+<div style="border: 1px;">
+<%= @user.description %>
+</div>
+
+<h3>Your Professional Network:</h3>
+<div style="border: 1px black solid; width: 30%; padding: 20px;">
+  <% @colleagues.each do |colleagues| %>
+    <%= colleagues.name %><br>
+  <% end %>
+</div>
+
+
+<h3>Invitations</h3>
+<p>The following people asked to be in their network:</p>
+<table>
+  <thead>
+  <tr>
+    <td>Name</td>
+    <td>Action</td>
+  </tr>
+</thead>
+  <tbody>
+    <% @invitations.each do |invite| %>
+      <tr>
+        <td><%= invite.user.name %></td>
+        <td>
+          <%= button_to "Accept Invite", networks_path, :params => {:id => invite.id, :colleague_id => invite.user_id} %>
+          <%= button_to "Ignore", {action: "destroy", controller: :invitations, :id => invite.id}, method: :delete%>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
